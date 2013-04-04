@@ -46,8 +46,8 @@ try:
 except ImportError:
     from graph import graph as pygraph
 
-__version__ = "$Id$"
-user_agent = "bulk_upload.py/%s Python/%s" % (__version__.split()[2], sys.version.split()[0])
+__version__ = "0.1"
+user_agent = "bulkyosm.py/%s Python/%s" % (__version__, sys.version.split()[0])
 
 api_host='http://api.openstreetmap.org'
 #api_host='http://api06.dev.openstreetmap.org'
