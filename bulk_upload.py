@@ -193,7 +193,7 @@ class IdMap:
         f=open(self.filename+".tmp","w")
         pickle.dump(self.idMap,f)
         f.close()
-	try:
+        try:
             os.remove(self.filename)
         except os.error:
             pass
