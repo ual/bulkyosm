@@ -50,7 +50,7 @@ __version__ = "0.1"
 user_agent = "bulkyosm.py/%s Python/%s" % (__version__, sys.version.split()[0])
 
 api_host='http://api.openstreetmap.org'
-#api_host='http://api06.dev.openstreetmap.org'
+
 headers = {
     'User-Agent' : user_agent,
 }
@@ -360,14 +360,23 @@ if __name__ == "__main__":
             if getattr(self.values, option.dest) is None:
                 self.error("%s option not supplied" % option)
 
-    usage = "usage: %prog -i input.osm -u user -p password"
+    usage = "usage: %prog [options]"
 
     parser = OptionParser(usage)
     parser.add_option("-i", "--input", dest="infile", help="read data from input.osm")
     parser.add_option("-u", "--user", dest="user", help="username")
     parser.add_option("-p", "--password", dest="password", help="password")
     parser.add_option("-c", "--comment", dest="comment", help="ChangeSet Comment")
+    parser.add_option("-H", "--host", dest="api_host",
+                      help="Host to upload changes to (default: %s)" % api_host, default=api_host)
     (options, args) = parser.parse_args()
+    api_host = options.api_host
+    if api_host.endswith('/'):
+        api_host = api_host[:-1]
+    if not api_host.startswith('http://') and \
+           not api_host.startswith('https://'):
+        # Assume the user meant http
+        api_host = "http://" + api_host
 
     parser.check_required("-i")
     parser.check_required("-u")
